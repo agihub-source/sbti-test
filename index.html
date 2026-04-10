@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>SBTI 人格测试</title>
   <style>
     :root {
@@ -681,7 +681,112 @@
       .dim-grid,
       .score-grid { grid-template-columns: 1fr; }
     }
-  </style>
+  
+/* 移动端优化 */
+@media (max-width: 768px) {
+  :root {
+    --radius: 16px;
+  }
+  .shell {
+    padding: 12px 8px 40px;
+  }
+  .hero {
+    padding: 20px 16px;
+  }
+  .hero h1 {
+    font-size: 28px !important;
+  }
+  .hero .sub {
+    font-size: 14px;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .mini-panel {
+    padding: 14px;
+  }
+  .card {
+    border-radius: 16px;
+  }
+  .question-card {
+    padding: 20px 16px;
+  }
+  .question-text {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .option-btn {
+    padding: 16px 20px;
+    font-size: 16px;
+    border-radius: 12px;
+    min-height: 56px;
+  }
+  .result-header {
+    padding: 24px 16px;
+  }
+  .result-type {
+    font-size: 32px;
+  }
+  .result-code {
+    font-size: 18px;
+  }
+  .result-img {
+    width: 200px;
+    height: 200px;
+  }
+  .result-desc {
+    font-size: 15px;
+    padding: 16px;
+  }
+  .btn {
+    padding: 14px 32px;
+    font-size: 16px;
+    min-height: 50px;
+  }
+}
+
+/* 触摸优化 */
+.option-btn {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* 底部安全区域 */
+.shell {
+  padding-bottom: env(safe-area-inset-bottom, 40px);
+}
+
+/* 更大的点击区域 */
+.option-btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+/* 优化输入体验 */
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+}
+
+/* 防止双击缩放 */
+* {
+  touch-action: manipulation;
+}
+
+</style>
 </head>
 <body>
   <div class="shell">
