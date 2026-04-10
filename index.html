@@ -6,27 +6,64 @@
 <title>SBTI人格测试</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:-apple-system,sans-serif;background:#667eea;overflow:hidden}
-.h{position:fixed;top:0;left:0;right:0;padding:16px;background:rgba(255,255,255,.2);display:flex;gap:12px;align-items:center;z-index:10}
-.pt{color:#fff;font-size:14px}
-.pb{flex:1;height:4px;background:rgba(255,255,255,.3);border-radius:2px}
-.pf{height:100%;background:#fff;border-radius:2px}
-.a{height:100vh;display:flex;align-items:center;justify-content:center;padding:70px 16px 20px}
-.c{width:100%;max-width:340px;background:#fff;border-radius:20px;padding:28px 20px;box-shadow:0 15px 40px rgba(0,0,0,.3)}
-.t{font-size:28px;font-weight:700;text-align:center;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
-.s{text-align:center;color:#666;font-size:13px;margin-bottom:24px}
-.b{display:block;width:100%;padding:14px;font-size:16px;color:#fff;background:linear-gradient(135deg,#667eea,#764ba2);border:none;border-radius:30px;margin-bottom:16px}
-.n{display:inline-block;padding:4px 10px;background:#667eea;color:#fff;border-radius:12px;font-size:12px;margin-bottom:12px}
-.q{font-size:16px;font-weight:600;line-height:1.5;margin-bottom:20px}
-.o{display:flex;flex-direction:column;gap:8px}
-.i{padding:14px;background:#f5f5f5;border:1px solid #ddd;border-radius:12px;font-size:14px;text-align:center}
-.i:hover{background:#eee}
-.i.s{background:#667eea;color:#fff;border-color:#667eea}
-.r{text-align:center;font-size:24px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-.rc{text-align:center;color:#666;font-family:monospace;margin-bottom:12px}
-.m{width:120px;height:120px;border-radius:12px;margin:12px auto;display:block;box-shadow:0 5px 20px rgba(0,0,0,.2)}
-.d{background:#f5f5f5;padding:12px;border-radius:10px;font-size:12px;line-height:1.6;margin-bottom:16px}
-.hid{display:none}
+html,body{height:100%;font-family:-apple-system,sans-serif;background:linear-gradient(135deg,#667eea,#764ba2);overflow:hidden;-webkit-tap-highlight-color:transparent}
+
+/* 顶部进度 */
+.h{position:fixed;top:0;left:0;right:0;padding:16px;background:rgba(255,255,255,.15);display:flex;gap:12px;align-items:center;z-index:10;backdrop-filter:blur(10px)}
+.pt{color:#fff;font-size:14px;font-weight:600}
+.pb{flex:1;height:6px;background:rgba(255,255,255,.25);border-radius:3px;overflow:hidden}
+.pf{height:100%;background:#fff;border-radius:3px;transition:width .3s ease}
+
+/* 主容器 */
+.a{height:100vh;display:flex;align-items:center;justify-content:center;padding:70px 16px 20px;perspective:1200px}
+
+/* 卡片容器 */
+.cs{position:relative;width:100%;max-width:360px;height:450px}
+
+/* 卡片 */
+.c{position:absolute;top:0;left:0;width:100%;height:100%;background:#fff;border-radius:24px;padding:32px 24px;box-shadow:0 20px 60px rgba(0,0,0,.25);transform-style:preserve-3d}
+
+/* 卡片动画状态 */
+.c.in{animation:cardIn .5s cubic-bezier(.34,1.56,.64,1) forwards}
+.c.out{animation:cardOut .4s ease-in forwards}
+.c.idle{transform:translateX(0) rotateY(0);opacity:1}
+.c.hid{display:none}
+
+@keyframes cardIn{
+  0%{transform:translateX(100%) rotateY(-15deg);opacity:0}
+  100%{transform:translateX(0) rotateY(0);opacity:1}
+}
+@keyframes cardOut{
+  0%{transform:translateX(0) rotateY(0);opacity:1}
+  30%{transform:translateX(-30%) rotateY(10deg);opacity:.8}
+  100%{transform:translateX(-120%) rotateY(25deg);opacity:0}
+}
+
+/* 内容样式 */
+.t{font-size:30px;font-weight:700;text-align:center;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+.s{text-align:center;color:#888;font-size:14px;margin-bottom:8px}
+.w{text-align:center;color:#e64980;font-size:13px;margin-bottom:28px}
+.b{display:block;width:100%;padding:16px;font-size:18px;color:#fff;background:linear-gradient(135deg,#667eea,#764ba2);border:none;border-radius:50px;cursor:pointer;box-shadow:0 8px 25px rgba(102,126,234,.4);transition:transform .2s,box-shadow .2s}
+.b:active{transform:scale(.95);box-shadow:0 4px 15px rgba(102,126,234,.3)}
+.au{text-align:center;color:#aaa;font-size:12px;margin-top:20px}
+.au a{color:#667eea;text-decoration:none}
+
+/* 问题样式 */
+.n{display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:16px;font-size:13px;margin-bottom:16px}
+.q{font-size:18px;font-weight:600;line-height:1.6;margin-bottom:24px;color:#333}
+.o{display:flex;flex-direction:column;gap:12px}
+.i{padding:16px 18px;background:#f8f9fa;border:2px solid #e9ecef;border-radius:14px;font-size:15px;text-align:center;cursor:pointer;transition:all .2s ease;color:#495057}
+.i:hover{background:#e9ecef;border-color:#dee2e6}
+.i:active{transform:scale(.97)}
+.i.s{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent;transform:scale(1.02);box-shadow:0 5px 20px rgba(102,126,234,.3)}
+
+/* 结果样式 */
+.rl{text-align:center;color:#888;font-size:13px;margin-bottom:8px}
+.rt{font-size:28px;font-weight:700;text-align:center;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.rc{text-align:center;color:#888;font-family:monospace;letter-spacing:2px;margin-bottom:16px}
+.rm{width:150px;height:150px;border-radius:18px;margin:12px auto;display:block;box-shadow:0 10px 30px rgba(0,0,0,.15);object-fit:cover}
+.ri{text-align:center;color:#667eea;font-size:14px;font-style:italic;margin-bottom:12px}
+.rd{background:#f8f9fa;padding:14px;border-radius:12px;font-size:13px;line-height:1.7;margin-bottom:20px;color:#495057}
 </style>
 </head>
 <body>
@@ -34,70 +71,123 @@ html,body{height:100%;font-family:-apple-system,sans-serif;background:#667eea;ov
 <span class="pt" id="pt">开始</span>
 <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
 </div>
+
 <div class="a">
-<div class="c" id="sc">
+<div class="cs">
+<!-- 开始卡片 -->
+<div class="c idle" id="sc">
 <h1 class="t">SBTI人格测试</h1>
-<p class="s">仅供娱乐</p>
+<p class="s">Silly Big Personality Test</p>
+<p class="w">仅供娱乐</p>
 <button class="b" id="sb">开始测试</button>
+<p class="au">原作者：<a href="https://space.bilibili.com/417038183">B站@蛆肉儿串儿</a></p>
 </div>
+
+<!-- 问题卡片 -->
 <div class="c hid" id="qc">
-<div class="n" id="qn">第1题</div>
+<div class="n" id="qn">第 1 题</div>
 <div class="q" id="qt"></div>
 <div class="o" id="os"></div>
 </div>
+
+<!-- 结果卡片 -->
 <div class="c hid" id="rc">
-<h2 class="r" id="rt"></h2>
+<p class="rl">你的 SBTI 人格类型是</p>
+<h2 class="rt" id="rtt"></h2>
 <p class="rc" id="rco"></p>
-<img class="m" id="ri" src="">
-<p style="text-align:center;color:#667eea;font-size:13px;margin-bottom:10px" id="rin"></p>
-<div class="d" id="rd"></div>
+<img class="rm" id="ri" src="">
+<p class="ri" id="rin"></p>
+<div class="rd" id="rd"></div>
 <button class="b" id="rb">重新测试</button>
 </div>
 </div>
+</div>
+
 <script src="data.js"></script>
 <script>
 let i=0,A={},N=Q.length;
+let sc=document.getElementById('sc');
+let qc=document.getElementById('qc');
+let rc=document.getElementById('rc');
+
+// 开始测试
 document.getElementById('sb').onclick=function(){
-  document.getElementById('sc').className='c hid';
-  document.getElementById('qc').className='c';
-  show(0);
+  sc.classList.remove('idle');
+  sc.classList.add('out');
+  
+  setTimeout(()=>{
+    sc.classList.add('hid');
+    qc.classList.remove('hid');
+    qc.classList.add('in');
+    
+    setTimeout(()=>qc.classList.replace('in','idle'),500);
+    show(0);
+  },400);
 };
+
+// 显示问题
 function show(n){
   i=n;
   document.getElementById('pt').textContent=(n+1)+'/'+N;
   document.getElementById('pf').style.width=(n+1)/N*100+'%';
-  document.getElementById('qn').textContent='第'+(n+1)+'题';
+  document.getElementById('qn').textContent='第 '+n+1+' 题';
   document.getElementById('qt').textContent=Q[n].text;
   document.getElementById('os').innerHTML=Q[n].options.map(o=>'<div class="i" onclick="ans('+o.value+',this)">'+o.label+'</div>').join('');
 }
+
+// 选择答案
 function ans(v,e){
   A[Q[i].id]=v;
-  e.parentElement.querySelectorAll('.i').forEach(x=>x.className='i');
-  e.className='i s';
+  e.parentElement.querySelectorAll('.i').forEach(x=>x.classList.remove('s'));
+  e.classList.add('s');
+  
   setTimeout(()=>{
     if(i<N-1){
-      document.getElementById('qc').className='c hid';
+      // 当前卡片飞走
+      qc.classList.remove('idle');
+      qc.classList.add('out');
+      
       setTimeout(()=>{
-        document.getElementById('qc').className='c';
+        qc.classList.add('hid');
+        qc.classList.remove('out');
+        
+        // 下一个问题内容
         show(i+1);
-      },200);
+        
+        // 新卡片飞入
+        qc.classList.remove('hid');
+        qc.classList.add('in');
+        setTimeout(()=>qc.classList.replace('in','idle'),500);
+      },400);
     }else{
-      res();
+      showResult();
     }
-  },250);
+  },300);
 }
-function res(){
-  document.getElementById('qc').className='c hid';
-  document.getElementById('rc').className='c';
-  document.getElementById('pf').style.width='100%';
-  let c=calc(),t=T[c];
-  document.getElementById('rt').textContent=t.cn;
-  document.getElementById('rco').textContent=t.code;
-  document.getElementById('ri').src='image/'+c+'.png';
-  document.getElementById('ri').onerror=function(){this.src='image/'+c+'.jpg'};
-  document.getElementById('rin').textContent=t.intro||'';
-  document.getElementById('rd').textContent=t.desc||'';
+
+// 显示结果
+function showResult(){
+  qc.classList.remove('idle');
+  qc.classList.add('out');
+  
+  setTimeout(()=>{
+    qc.classList.add('hid');
+    rc.classList.remove('hid');
+    rc.classList.add('in');
+    setTimeout(()=>rc.classList.replace('in','idle'),500);
+    
+    document.getElementById('pf').style.width='100%';
+    let c=calc(),t=T[c];
+    document.getElementById('rtt').textContent=t.cn;
+    document.getElementById('rco').textContent=t.code;
+    document.getElementById('ri').src='image/'+c+'.png';
+    document.getElementById('ri').onerror=function(){this.src='image/'+c+'.jpg'};
+    document.getElementById('rin').textContent=t.intro||'';
+    document.getElementById('rd').textContent=t.desc||'';
+  },400);
 }
+
+// 计算结果
 function calc(){
   let s={};
   Q.forEach(q=>{if(A[q.id])s[q.dim]=(s[q.dim]||0)+A[q.id]});
@@ -122,12 +212,22 @@ function calc(){
   if(s.E1>2.5)return'SEXY';
   return'Dior-s';
 }
+
+// 重新测试
 document.getElementById('rb').onclick=function(){
   i=0;A={};
-  document.getElementById('rc').className='c hid';
-  document.getElementById('sc').className='c';
-  document.getElementById('pf').style.width='0%';
-  document.getElementById('pt').textContent='开始';
+  rc.classList.remove('idle');
+  rc.classList.add('out');
+  
+  setTimeout(()=>{
+    rc.classList.add('hid');
+    sc.classList.remove('hid');
+    sc.classList.add('in');
+    setTimeout(()=>sc.classList.replace('in','idle'),500);
+    
+    document.getElementById('pf').style.width='0%';
+    document.getElementById('pt').textContent='开始';
+  },400);
 };
 </script>
 </body>
