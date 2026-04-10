@@ -8,14 +8,11 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;font-family:-apple-system,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
 
-/* 进度条 */
 .top{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.2);z-index:10}
 .top>div{height:100%;background:#fff;transition:width .3s ease}
 
-/* 主容器 */
 .main{height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 16px;perspective:1500px}
 
-/* 卡片 */
 .card{width:100%;max-width:360px;background:#fff;border-radius:20px;padding:36px 28px;box-shadow:0 15px 50px rgba(0,0,0,.2);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .3s}
 .card.swt{animation:swt .45s ease forwards}
 .card.in{animation:in .45s cubic-bezier(.34,1.56,.64,1) forwards}
@@ -24,7 +21,6 @@ html,body{height:100%;font-family:-apple-system,sans-serif;background:linear-gra
 @keyframes swt{0%{transform:translateX(0) rotateY(0)}40%{transform:translateX(-50%) rotateY(15deg)}100%{transform:translateX(-100%) rotateY(0)}}
 @keyframes in{0%{opacity:0;transform:translateX(50%) scale(.95) rotateY(-10deg)}100%{opacity:1;transform:translateX(0) scale(1) rotateY(0)}}
 
-/* 开始页 */
 .tit{text-align:center;font-size:28px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
 .sub{text-align:center;font-size:14px;color:#888;margin-bottom:8px}
 .warn{text-align:center;font-size:13px;color:#e64980;margin-bottom:32px}
@@ -33,15 +29,14 @@ html,body{height:100%;font-family:-apple-system,sans-serif;background:linear-gra
 .author{text-align:center;font-size:12px;color:#aaa;margin-top:20px}
 .author a{color:#667eea;text-decoration:none}
 
-/* 问题页 - 使用 Canvas */
-.canvas-container{width:100%;display:flex;flex-direction:column;align-items:center}
-#qCanvas{width:100%;height:auto;display:block;margin-bottom:20px}
+/* 问题页 - Canvas 渲染 */
+.canvas-wrap{width:100%;margin-bottom:24px}
+#qCanvas{width:100%;display:block}
 .opts{display:flex;flex-direction:column;gap:10px;width:100%}
 .opt{padding:14px;background:#f8f9fa;border:2px solid transparent;border-radius:12px;font-size:15px;color:#333;cursor:pointer;transition:all .15s;text-align:center}
 .opt:active{transform:scale(.97)}
 .opt.sl{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
 
-/* 结果页 */
 .res{text-align:center}
 .res>div:first-child{font-size:13px;color:#888;margin-bottom:8px}
 .type{text-align:center;font-size:24px;font-weight:600;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
@@ -62,9 +57,7 @@ html,body{height:100%;font-family:-apple-system,sans-serif;background:linear-gra
 <p class="author">原作者：<a href="https://space.bilibili.com/417038183">B站@蛆肉儿串儿</a></p>
 </div>
 <div class="card hd" id="q">
-<div class="canvas-container">
-<canvas id="qCanvas"></canvas>
-</div>
+<div class="canvas-wrap"><canvas id="qCanvas"></canvas></div>
 <div class="opts" id="o"></div>
 </div>
 <div class="card hd res" id="r">
@@ -81,9 +74,6 @@ html,body{height:100%;font-family:-apple-system,sans-serif;background:linear-gra
 <script src="pretext.js"></script>
 <script src="data.js"></script>
 <script>
-// 使用 Pretext 进行文本测量和布局
-const { prepare, layout, prepareWithSegments, layoutWithLines } = pretext;
-
 let i=0,a={},n=Q.length;
 const s=document.getElementById('s');
 const q=document.getElementById('q');
@@ -91,99 +81,68 @@ const r=document.getElementById('r');
 const canvas=document.getElementById('qCanvas');
 const ctx=canvas.getContext('2d');
 
-// 设置 Canvas 高 DPI
-function setupCanvas(width){
+// 使用 Pretext 渲染问题
+function renderQ(text,num){
   const dpr=window.devicePixelRatio||1;
-  canvas.width=width*dpr;
-  canvas.height=400*dpr;
-  canvas.style.width=width+'px';
-  canvas.style.height='200px';
-  ctx.scale(dpr,dpr);
-  ctx.textBaseline='top';
-}
-
-// 使用 Pretext 渲染问题文本
-function renderQuestion(text){
-  const width=canvas.width/(window.devicePixelRatio||1)-20;
+  const w=304;
   const fontSize=17;
-  const lineHeight=24;
+  const lineHeight=26;
   const font=`${fontSize}px -apple-system, sans-serif`;
   
   // 使用 Pretext 准备文本
-  const prepared=prepareWithSegments(text,font);
-  const {lines}=layoutWithLines(prepared,width,lineHeight);
+  const fullText=`第 ${num} 题 / 共 ${n} 题\n\n${text}`;
+  const prepared=pretext.prepareWithSegments(fullText,font);
+  const {lines,height}=pretext.layoutWithLines(prepared,w-20,lineHeight);
   
-  // 计算实际高度
-  const actualHeight=lines.length*lineHeight+20;
-  const dpr=window.devicePixelRatio||1;
-  canvas.height=actualHeight*dpr;
-  canvas.style.height=actualHeight+'px';
-  ctx.scale(dpr,dpr);
+  // 设置 Canvas
+  const h=height+30;
+  canvas.width=w*dpr;
+  canvas.height=h*dpr;
+  canvas.style.width=w+'px';
+  canvas.style.height=h+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
   
   // 清空
   ctx.fillStyle='#fff';
-  ctx.fillRect(0,0,width,actualHeight);
+  ctx.fillRect(0,0,w,h);
   
-  // 渲染文本
+  // 渲染题号
+  ctx.fillStyle='#999';
+  ctx.font='13px -apple-system, sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText(`第 ${num} 题 / 共 ${n} 题`,w/2,10);
+  
+  // 渲染问题
   ctx.fillStyle='#333';
   ctx.font=font;
-  ctx.textAlign='center';
-  
-  lines.forEach((line,idx)=>{
-    ctx.fillText(line.text,width/2,10+idx*lineHeight);
+  lines.slice(1).forEach((line,idx)=>{
+    if(line.text)ctx.fillText(line.text,w/2,40+idx*lineHeight);
   });
-  
-  return actualHeight;
 }
 
 function start(){
   s.classList.add('swt');
-  setTimeout(()=>{
-    s.classList.add('hd');
-    q.classList.remove('hd');
-    q.classList.add('in');
-    setupCanvas(304);
-    show(0);
-  },450);
+  setTimeout(()=>{s.classList.add('hd');q.classList.remove('hd');q.classList.add('in');show(0)},450);
 }
 
 function show(x){
   i=x;
   document.getElementById('p').style.width=(x+1)/n*100+'%';
-  
-  // 使用 Pretext 渲染问题
-  const qText=`第 ${x+1} 题 / 共 ${n} 题\n\n${Q[x].text}`;
-  renderQuestion(Q[x].text);
-  
-  // 渲染选项
-  document.getElementById('o').innerHTML=Q[x].options.map(o=>
-    `<div class="opt" onclick="ans(${o.value},this)">${o.label}</div>`
-  ).join('');
+  renderQ(Q[x].text,x+1);
+  document.getElementById('o').innerHTML=Q[x].options.map(o=>`<div class="opt" onclick="ans(${o.value},this)">${o.label}</div>`).join('');
 }
 
 function ans(v,e){
   a[Q[i].id]=v;
   e.parentElement.querySelectorAll('.opt').forEach(x=>x.classList.remove('sl'));
   e.classList.add('sl');
-  
   setTimeout(()=>{
     if(i<n-1){
       q.classList.add('swt');
-      setTimeout(()=>{
-        q.classList.add('hd');
-        q.classList.remove('swt','sl');
-        show(i+1);
-        q.classList.remove('hd');
-        q.classList.add('in');
-      },450);
+      setTimeout(()=>{q.classList.add('hd');q.classList.remove('swt','sl');show(i+1);q.classList.remove('hd');q.classList.add('in')},450);
     }else{
       q.classList.add('swt');
-      setTimeout(()=>{
-        q.classList.add('hd');
-        r.classList.remove('hd');
-        r.classList.add('in');
-        res();
-      },450);
+      setTimeout(()=>{q.classList.add('hd');r.classList.remove('hd');r.classList.add('in');res()},450);
     }
   },250);
 }
@@ -227,12 +186,7 @@ function calc(){
 function reset(){
   i=0;a={};
   r.classList.add('swt');
-  setTimeout(()=>{
-    r.classList.add('hd');
-    s.classList.remove('hd');
-    s.classList.add('in');
-    document.getElementById('p').style.width='0%';
-  },450);
+  setTimeout(()=>{r.classList.add('hd');s.classList.remove('hd');s.classList.add('in');document.getElementById('p').style.width='0%'},450);
 }
 </script>
 </body>
