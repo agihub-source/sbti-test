@@ -3,58 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1">
-<title>SBTI</title>
+<title>SBTI 人格测试</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;background:#fafafa;overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
 
 /* 进度条 */
-.top{position:fixed;top:0;left:0;right:0;height:3px;background:#eee;z-index:10}
-.top>div{height:100%;background:#333;transition:width .3s ease}
+.top{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.2);z-index:10}
+.top>div{height:100%;background:#fff;transition:width .3s ease}
 
 /* 主容器 */
 .main{height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 16px;perspective:1500px}
 
 /* 卡片 */
-.card{width:100%;max-width:340px;background:#fff;border-radius:20px;padding:40px 28px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 8px 40px rgba(0,0,0,.06);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .3s}
+.card{width:100%;max-width:360px;background:#fff;border-radius:20px;padding:36px 28px;box-shadow:0 15px 50px rgba(0,0,0,.2);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .3s}
 .card.swt{animation:swt .45s ease forwards}
-.card.in{animation:in .45s ease forwards}
+.card.in{animation:in .45s cubic-bezier(.34,1.56,.64,1) forwards}
 .card.hd{opacity:0;transform:translateX(-100%);pointer-events:none}
 
 @keyframes swt{0%{transform:translateX(0) rotateY(0)}40%{transform:translateX(-50%) rotateY(15deg)}100%{transform:translateX(-100%) rotateY(0)}}
-@keyframes in{0%{opacity:0;transform:translateX(50%) scale(.95)}100%{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes in{0%{opacity:0;transform:translateX(50%) scale(.95) rotateY(-10deg)}100%{opacity:1;transform:translateX(0) scale(1) rotateY(0)}}
 
 /* 开始页 */
-.tit{text-align:center;font-size:28px;font-weight:600;letter-spacing:-.5px;color:#111;margin-bottom:8px}
-.sub{text-align:center;font-size:14px;color:#666;margin-bottom:40px}
-.btn{display:block;width:100%;padding:14px;background:#111;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;transition:background .2s}
-.btn:active{background:#333}
+.tit{text-align:center;font-size:32px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.sub{text-align:center;font-size:14px;color:#888;margin-bottom:8px}
+.warn{text-align:center;font-size:13px;color:#e64980;margin-bottom:32px}
+.btn{display:block;width:100%;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:50px;font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 8px 25px rgba(102,126,234,.4);transition:transform .2s}
+.btn:active{transform:scale(.96)}
+.author{text-align:center;font-size:12px;color:#aaa;margin-top:20px}
+.author a{color:#667eea;text-decoration:none}
 
 /* 问题页 */
-.num{color:#999;font-size:12px;margin-bottom:20px}
-.q{text-align:center;font-size:17px;font-weight:500;line-height:1.6;color:#111;margin-bottom:32px}
+.num{color:#999;font-size:12px;margin-bottom:16px;text-align:center}
+.q{text-align:center;font-size:17px;font-weight:500;line-height:1.6;color:#333;margin-bottom:28px}
 .opts{display:flex;flex-direction:column;gap:10px}
-.opt{padding:14px;background:#f5f5f5;border:none;border-radius:10px;font-size:14px;color:#333;cursor:pointer;transition:all .15s;text-align:center}
-.opt:active{background:#eee;transform:scale(.98)}
-.opt.sl{background:#111;color:#fff}
+.opt{padding:14px;background:#f8f9fa;border:2px solid transparent;border-radius:12px;font-size:15px;color:#333;cursor:pointer;transition:all .15s;text-align:center}
+.opt:active{transform:scale(.97)}
+.opt.sl{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent;transform:scale(1.02)}
 
 /* 结果页 */
 .res{text-align:center}
-.res>div:first-child{font-size:12px;color:#999;margin-bottom:8px}
-.type{text-align:center;font-size:24px;font-weight:600;color:#111;margin-bottom:4px}
-.code{text-align:center;font-size:13px;color:#999;font-family:"SF Mono",monospace;margin-bottom:20px}
-.img{width:120px;height:120px;border-radius:12px;margin:0 auto 16px;display:block}
-.intro{text-align:center;font-size:14px;color:#666;margin-bottom:16px;font-style:italic}
-.desc{background:#f8f8f8;padding:14px;border-radius:10px;font-size:13px;line-height:1.7;margin-bottom:24px;color:#333}
+.res>div:first-child{font-size:13px;color:#888;margin-bottom:8px}
+.type{text-align:center;font-size:26px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.code{text-align:center;font-size:15px;color:#888;font-family:"SF Mono",monospace;letter-spacing:1px;margin-bottom:16px}
+.img{width:130px;height:130px;border-radius:16px;margin:0 auto 16px;display:block;box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.intro{text-align:center;font-size:14px;color:#667eea;margin-bottom:12px;font-style:italic}
+.desc{background:#f8f9fa;padding:14px;border-radius:12px;font-size:13px;line-height:1.7;margin-bottom:20px;color:#555;text-align:left}
 </style>
 </head>
 <body>
 <div class="top"><div id="p" style="width:0%"></div></div>
 <div class="main">
 <div class="card" id="s">
-<h1 class="tit">SBTI</h1>
-<p class="sub">人格测试</p>
-<button class="btn" onclick="start()">开始</button>
+<h1 class="tit">SBTI 人格测试</h1>
+<p class="sub">Silly Big Personality Test</p>
+<p class="warn">仅供娱乐</p>
+<button class="btn" onclick="start()">开始测试</button>
+<p class="author">原作者：<a href="https://space.bilibili.com/417038183">B站@蛆肉儿串儿</a></p>
 </div>
 <div class="card hd" id="q">
 <div class="num" id="n"></div>
@@ -62,7 +67,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text"
 <div class="opts" id="o"></div>
 </div>
 <div class="card hd res" id="r">
-<div>你的类型</div>
+<div>你的 SBTI 人格类型是</div>
 <h2 class="type" id="ty"></h2>
 <p class="code" id="co"></p>
 <img class="img" id="im" src="">
@@ -86,7 +91,7 @@ function start(){
 function show(x){
   i=x;
   document.getElementById('p').style.width=(x+1)/n*100+'%';
-  document.getElementById('n').textContent=x+1+'/'+n;
+  document.getElementById('n').textContent='第 '+(x+1)+' 题 / 共 '+n+' 题';
   document.getElementById('t').textContent=Q[x].text;
   document.getElementById('o').innerHTML=Q[x].options.map(o=>'<div class="opt" onclick="ans('+o.value+',this)">'+o.label+'</div>').join('');
 }
