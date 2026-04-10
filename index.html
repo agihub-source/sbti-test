@@ -712,25 +712,13 @@
   .question-card {
     padding: 20px 16px;
   }
-  .question-text {
-    font-size: 17px;
-    line-height: 1.6;
-  }
-  .option-btn {
-    padding: 16px 20px;
-    font-size: 16px;
-    border-radius: 12px;
-    min-height: 56px;
-  }
+  .question-text { font-size: 18px; line-height: 1.7; font-weight: 500; }
+  .option-btn { width: 100%; padding: 18px 24px; font-size: 16px; border-radius: 14px; background: var(--soft); border: 1.5px solid var(--line); cursor: pointer; text-align: center; transition: all 0.2s; font-weight: 500; }
   .result-header {
     padding: 24px 16px;
   }
-  .result-type {
-    font-size: 32px;
-  }
-  .result-code {
-    font-size: 18px;
-  }
+  .result-type { font-size: 36px; font-weight: 700; color: var(--accent-strong); margin: 0 0 6px; }
+  .result-code { font-size: 18px; color: var(--muted); font-family: monospace; letter-spacing: 1px; }
   .result-img {
     width: 200px;
     height: 200px;
@@ -739,30 +727,13 @@
     font-size: 15px;
     padding: 16px;
   }
-  .btn {
-    padding: 14px 32px;
-    font-size: 16px;
-    min-height: 50px;
-  }
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 16px 40px; font-size: 17px; font-weight: 600; border-radius: 999px; background: var(--accent); color: white; border: none; cursor: pointer; transition: all 0.2s; min-height: 54px; }
 }
 
 /* 触摸优化 */
-.option-btn {
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
+.option-btn { width: 100%; padding: 18px 24px; font-size: 16px; border-radius: 14px; background: var(--soft); border: 1.5px solid var(--line); cursor: pointer; text-align: center; transition: all 0.2s; font-weight: 500; }
 
-.btn {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-  cursor: pointer;
-}
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 16px 40px; font-size: 17px; font-weight: 600; border-radius: 999px; background: var(--accent); color: white; border: none; cursor: pointer; transition: all 0.2s; min-height: 54px; }
 
 /* 底部安全区域 */
 .shell {
@@ -784,6 +755,142 @@ body {
 /* 防止双击缩放 */
 * {
   touch-action: manipulation;
+}
+
+
+
+/* 问题卡片优化 */
+.question-card {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+}
+
+.question-text {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 进度条优化 */
+.progress-bar {
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+/* 步骤指示器 */
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.step-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.step-dot.active {
+  background: var(--accent);
+  width: 20px;
+  border-radius: 3px;
+}
+
+/* 移动端问题编号 */
+.question-num {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* 结果页面优化 */
+.result-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.result-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 20px;
+  margin: 20px auto;
+  box-shadow: var(--shadow);
+}
+
+.result-desc {
+  background: var(--soft);
+  padding: 20px;
+  border-radius: 16px;
+  margin: 16px 0;
+  font-size: 15px;
+  line-height: 1.8;
+  text-align: left;
+}
+
+/* 分享按钮区 */
+.share-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--soft);
+  border-radius: 16px;
+}
+
+/* 底部操作栏 */
+.bottom-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .question-card {
+    padding: 20px 16px;
+    margin: 12px 0;
+  }
+  
+  .question-text {
+    font-size: 17px;
+  }
+  
+  .result-img {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .bottom-actions {
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
 }
 
 </style>
