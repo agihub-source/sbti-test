@@ -893,6 +893,376 @@ body {
   }
 }
 
+
+/* 卡片式答题 */
+.quiz-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  padding-bottom: 100px;
+}
+
+.question-card-stack {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  perspective: 1000px;
+}
+
+.question-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  transform-origin: center center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+  pointer-events: none;
+}
+
+.question-card.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.question-card.prev {
+  opacity: 0;
+  transform: translateX(-100%) rotate(-10deg);
+}
+
+.question-card.next {
+  opacity: 0;
+  transform: translateX(100%) rotate(10deg);
+}
+
+.question-num {
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.question-progress {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line);
+  transition: all 0.3s;
+}
+
+.progress-dot.done {
+  background: var(--accent);
+}
+
+.progress-dot.current {
+  background: var(--accent-strong);
+  width: 24px;
+  border-radius: 4px;
+}
+
+.question-text {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 28px;
+  min-height: 80px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-card {
+  background: var(--soft);
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.option-card:active {
+  transform: scale(0.97);
+}
+
+.option-card.selected {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent-strong);
+  transform: scale(1.02);
+}
+
+/* 顶部进度条 */
+.top-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--line);
+  z-index: 1000;
+}
+
+.top-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transition: width 0.3s ease;
+}
+
+/* 底部导航 */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+.nav-btn.prev {
+  background: var(--soft);
+  color: var(--text);
+  border: 1.5px solid var(--line);
+}
+
+.nav-btn.next {
+  background: var(--accent);
+  color: white;
+}
+
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 开始页面 */
+.start-card {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.start-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.start-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.start-warning {
+  font-size: 13px;
+  color: var(--accent-strong);
+  margin-bottom: 28px;
+}
+
+.start-btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 16px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* 结果页面 */
+.result-card {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 100%;
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-label {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.result-type {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--accent-strong);
+  margin-bottom: 4px;
+}
+
+.result-code {
+  font-size: 18px;
+  color: var(--muted);
+  font-family: monospace;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.result-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  margin: 16px auto;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.result-intro {
+  font-size: 16px;
+  font-style: italic;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.result-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+  text-align: left;
+  background: var(--soft);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-btn {
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.result-btn.primary {
+  background: var(--accent);
+  color: white;
+}
+
+.result-btn.secondary {
+  background: var(--soft);
+  color: var(--text);
+  border: 1.5px solid var(--line);
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .quiz-container {
+    padding: 16px 12px;
+    padding-bottom: 100px;
+  }
+  
+  .question-card {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+  
+  .question-text {
+    font-size: 18px;
+  }
+  
+  .option-card {
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+  
+  .start-card, .result-card {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+  
+  .start-title {
+    font-size: 28px;
+  }
+  
+  .result-type {
+    font-size: 32px;
+  }
+  
+  .result-img {
+    width: 160px;
+    height: 160px;
+  }
+}
+
 </style>
 </head>
 <body>
