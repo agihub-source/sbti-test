@@ -16,7 +16,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC"
 .main{height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 16px;perspective:1500px}
 
 /* 卡片 */
-.card{width:100%;max-width:360px;background:#fff;border-radius:20px;padding:36px 28px;box-shadow:0 15px 50px rgba(0,0,0,.2);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .3s}
+.card{width:100%;max-width:360px;min-height:400px;background:#fff;border-radius:20px;padding:32px 24px;box-shadow:0 15px 50px rgba(0,0,0,.2);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .3s}
 .card.swt{animation:swt .45s ease forwards}
 .card.in{animation:in .45s cubic-bezier(.34,1.56,.64,1) forwards}
 .card.hd{opacity:0;transform:translateX(-100%);pointer-events:none}
@@ -25,7 +25,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC"
 @keyframes in{0%{opacity:0;transform:translateX(50%) scale(.95) rotateY(-10deg)}100%{opacity:1;transform:translateX(0) scale(1) rotateY(0)}}
 
 /* 开始页 */
-.tit{text-align:center;font-size:32px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.tit{text-align:center;font-size:28px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
 .sub{text-align:center;font-size:14px;color:#888;margin-bottom:8px}
 .warn{text-align:center;font-size:13px;color:#e64980;margin-bottom:32px}
 .btn{display:block;width:100%;padding:14px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:50px;font-size:16px;font-weight:500;cursor:pointer;box-shadow:0 8px 25px rgba(102,126,234,.4);transition:transform .2s}
@@ -34,21 +34,21 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC"
 .author a{color:#667eea;text-decoration:none}
 
 /* 问题页 */
-.num{color:#999;font-size:12px;margin-bottom:16px;text-align:center}
-.q{text-align:center;font-size:17px;font-weight:500;line-height:1.6;color:#333;margin-bottom:28px}
+.num{color:#999;font-size:13px;margin-bottom:16px;text-align:center}
+.q{text-align:center;font-size:16px;font-weight:500;line-height:1.6;color:#333;margin-bottom:24px;word-break:break-word}
 .opts{display:flex;flex-direction:column;gap:10px}
-.opt{padding:14px;background:#f8f9fa;border:2px solid transparent;border-radius:12px;font-size:15px;color:#333;cursor:pointer;transition:all .15s;text-align:center}
+.opt{width:100%;min-height:48px;padding:12px 16px;background:#f8f9fa;border:2px solid transparent;border-radius:12px;font-size:15px;color:#333;cursor:pointer;transition:all .15s;text-align:center;display:flex;align-items:center;justify-content:center;word-break:break-word;line-height:1.4}
 .opt:active{transform:scale(.97)}
-.opt.sl{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent;transform:scale(1.02)}
+.opt.sl{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
 
 /* 结果页 */
 .res{text-align:center}
 .res>div:first-child{font-size:13px;color:#888;margin-bottom:8px}
-.type{text-align:center;font-size:26px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
-.code{text-align:center;font-size:15px;color:#888;font-family:"SF Mono",monospace;letter-spacing:1px;margin-bottom:16px}
-.img{width:130px;height:130px;border-radius:16px;margin:0 auto 16px;display:block;box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.type{text-align:center;font-size:24px;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.code{text-align:center;font-size:14px;color:#888;font-family:"SF Mono",monospace;letter-spacing:1px;margin-bottom:16px}
+.img{width:120px;height:120px;border-radius:16px;margin:0 auto 16px;display:block;box-shadow:0 8px 25px rgba(0,0,0,.15)}
 .intro{text-align:center;font-size:14px;color:#667eea;margin-bottom:12px;font-style:italic}
-.desc{background:#f8f9fa;padding:14px;border-radius:12px;font-size:13px;line-height:1.7;margin-bottom:20px;color:#555;text-align:left}
+.desc{background:#f8f9fa;padding:14px;border-radius:12px;font-size:13px;line-height:1.7;margin-bottom:20px;color:#555;text-align:left;word-break:break-word}
 </style>
 </head>
 <body>
